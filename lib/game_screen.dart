@@ -112,7 +112,7 @@ class _GameSreenState extends State<GameSreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "Turn:",
                       style: TextStyle(
                         fontSize: 24,
