@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => GameSreen(
+                      builder: (context) => GameScreen(
                         player1: player1Controller.text,
                         player2: player2Controller.text,
                       ),
