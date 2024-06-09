@@ -45,38 +45,40 @@ class _GameSreenState extends State<GameScreen> {
   setState(() {
     _board[row][col] = _currentPlayer;
 
-    // check for a winner
-    if (_board[row][0] == _currentPlayer && 
-        _board[row][1]== _currentPlayer && 
-        _board[row][2] ==_currentPlayer){
-      _winner = _currentPlayer;
-      _gameOver = true;
-    } else if (_board[0][col] == _currentPlayer && 
-        _board[1][col]== _currentPlayer && 
-        _board[2][col] ==_currentPlayer){
-      _winner = _currentPlayer;
-      _gameOver = true;
+    // Check for a winner (Simplified)
+    for (int i = 0; i < 3; i++) {
+      if (_board[row][i] != _currentPlayer) break;
+      if (i == 2) {
+        _winner = _currentPlayer;
+        _gameOver = true;
+      }
     }
-    else if (_board[0][0] == _currentPlayer && 
-        _board[1][1]== _currentPlayer && 
-        _board[2][2] ==_currentPlayer){
-      _winner = _currentPlayer;
-      _gameOver = true;
+
+    for (int i = 0; i < 3; i++) {
+      if (_board[i][col] != _currentPlayer) break;
+      if (i == 2) {
+        _winner = _currentPlayer;
+        _gameOver = true;
+      }
     }
-    else if (_board[0][2] == _currentPlayer && 
-        _board[1][1]== _currentPlayer && 
-        _board[2][0] ==_currentPlayer){
+
+    if (_board[0][0] == _currentPlayer && _board[1][1] == _currentPlayer && _board[2][2] == _currentPlayer) {
       _winner = _currentPlayer;
       _gameOver = true;
     }
 
-    // switch players
-    _currentPlayer = _currentPlayer == "X" ? "0"  : "X";
-
-    // check for a tie
-    if(!_board.any((row) => row.any((cell) => cell == ""))){
+    if (_board[0][2] == _currentPlayer && _board[1][1] == _currentPlayer && _board[2][0] == _currentPlayer) {
+      _winner = _currentPlayer;
       _gameOver = true;
-      _winner = "It`s a tie";
+    }
+
+    // Switch players (Corrected)
+    _currentPlayer = (_currentPlayer == "X") ? "O" : "X"; // Changed "0" to "O"
+
+    // Check for a tie
+    if (!_board.any((row) => row.any((cell) => cell == ""))) {
+      _gameOver = true;
+      _winner = "It's a tie!";
     }
 
       if(_winner != ""){
@@ -85,7 +87,7 @@ class _GameSreenState extends State<GameScreen> {
           dialogType: DialogType.success,
           animType: AnimType.rightSlide,
             btnOkText: "Play again",    
-            title: _winner == "x" 
+            title: _winner == "X" 
                 ? widget.player1 + "Won!"
                 : _winner == "O" 
                   ? widget.player2 + "Won!" 
@@ -93,7 +95,7 @@ class _GameSreenState extends State<GameScreen> {
           btnOkOnPress: (){
             _resetGame();
           },
-        )..show();
+        ).show();
       }
     });
   }
